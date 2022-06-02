@@ -5,15 +5,11 @@ const App = () => {
 
   {/*ここはTODOリストに追加するリストを増やすためのもの*/}
   const [incompleteTodos,setIncompleteTodos] = useState([
-      "fist thing I have to do today",
-      "Second thing I have to do today",
-      "Third thing I have to do today"])
+      ])
 
   {/*ここは今日すべきことで最初に表示すべきことを表示するためのところ*/}
   const [completeTodos, setcompleteTodos] = useState([
-      "What I have done First",
-      "What I have done second", 
-      "What I have done third"])
+      ])
   {/*クリックした際にTODOリストにリストを追加するときに使う関数*/}
   const onChangeTodoText = (e) => setTodoText(e.target.value);
   
@@ -35,6 +31,14 @@ const App = () => {
     const newcompleteTodos = [...completeTodos,incompleteTodos[index]];
     setIncompleteTodos(newIncompleteTodos);
     setcompleteTodos(newcompleteTodos);
+  }
+
+  const onClickBack = (index) => {
+      const newcompleteTodos = [...completeTodos];
+      newcompleteTodos.splice(index,1);
+      const newIncompleteTodos = [...incompleteTodos,completeTodos[index]];
+      setcompleteTodos(newcompleteTodos);
+      setIncompleteTodos(newIncompleteTodos);
   }
 
     return (
@@ -63,11 +67,11 @@ const App = () => {
         <p className='title'>Finished list</p>
         <ul>
                
-            {completeTodos.map((todo) =>{
+            {completeTodos.map((todo,index) =>{
                 return(
                     <div key={todo} className='list-row'>
                     <li>{todo}</li>
-                    <button>Return</button>
+                    <button onClick={() => onClickBack(index)}>Return</button>
             </div>
                 )
             })}
